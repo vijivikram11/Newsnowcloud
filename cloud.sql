@@ -1,18 +1,18 @@
-passenger as (
+with passenger as (
 
-  select * from SURVEY.PUBLIC.SURVEY_DATA
+  select ID,GENDER,CUSTOMERTYPE,TYPEOFTRAVEL,CLASS,SATISFACTION from SURVEY.PUBLIC.SURVEY_DATA
   
 ), 
 
 custtype as (
 
-  select * from SURVEY.PUBLIC.DIM_CUSTOMERTYPE
+  select CUSTOMERTYPE from SURVEY.PUBLIC.DIM_CUSTOMERTYPE
   
 ), 
 
 traveltype as (
 
-  select * from SURVEY.PUBLIC.DIM_TRAVELTYPE
+  select TYPEOFTRAVEL from SURVEY.PUBLIC.DIM_TRAVELTYPE
   
 ), 
 TargetResults as (
