@@ -1,4 +1,4 @@
-passenger as (
+with passenger as (
 
   select * from {{ ref('SURVEY.PUBLIC.SURVEY_DATA') }}
   
@@ -15,7 +15,6 @@ traveltype as (
   select * from {{ ref('SURVEY.PUBLIC.DIM_TRAVELTYPE') }}
   
 ), 
-
 TargetResults as (
       passenger.ID,
       passenger.GENDER,
