@@ -1,32 +1,35 @@
-with passenger as (
+{{
+  config(
+    materialized='view'
+  )
+}}
+with
+    survey_data as (
 
-  select ID,GENDER,CUSTOMERTYPE,TYPEOFTRAVEL,CLASS,SATISFACTION from SURVEY.PUBLIC.SURVEY_DATA
-  
-), 
+        select id, gender, customertype, typeoftravel, class, satisfaction
 
-custtype as (
+        from survey.public.survey_data
 
-  select CUSTOMERTYPE from SURVEY.PUBLIC.DIM_CUSTOMERTYPE
-  
-), 
+    ),
 
-traveltype as (
+    custtype as (select customertype, customerid from survey.public.dim_customertype),
 
-  select TYPEOFTRAVEL from SURVEY.PUBLIC.DIM_TRAVELTYPE
-  
-), 
-TargetResults as (
-      passenger.ID,
-      passenger.GENDER,
-      custtype.CUSTOMERID as CUSTOMERTYPEID, 
-      traveltype.TYPEID as TYPEOFTRAVELID,
-      passenger.CLASS,
-      passenger.SATISFACTION
-      from passenger
-    left join custtype
-      on passenger.CUSTOMERTYPE=custtype.CUSTOMERTYPE
-    left join traveltype
-      on passenger.TYPEOFTRAVEL=traveltype.TYPEID  
- )
+    typetravel as (select typeid, typeoftravel from survey.public.dim_traveltype),
 
- select * from TargetResults
+    final as (
+
+        select
+            survey_data.id,
+            survey_data.gender,
+            survey_data.class,
+            survey_data.satisfaction,
+            custtype.customerid as customertypeid
+
+        from survey_data
+
+        left join custtype using (customertype)
+
+    )
+
+select *
+from final
