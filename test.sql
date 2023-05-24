@@ -1,29 +1,20 @@
+{{
+  config(
+    materialized='view'
+  )
+}}
 with
     survey_data as (
 
         select id, gender, customertype, typeoftravel, class, satisfaction
 
-        from SURVEY.PUBLIC.SURVEY_DATA
+        from survey.public.survey_data
 
     ),
 
-    Custtype as (
+    custtype as (select customertype, customerid from survey.public.dim_customertype),
 
-        select 
-            CUSTOMERTYPE,
-            customerid
-        from SURVEY.PUBLIC.DIM_CUSTOMERTYPE
-
-    ),
-
-    TypeTravel as (
-
-        select
-            Typeid,
-            TypeofTravel
-        from SURVEY.PUBLIC.DIM_TRAVELTYPE
-
-    ),
+    typetravel as (select typeid, typeoftravel from survey.public.dim_traveltype),
 
     final as (
 
@@ -32,11 +23,11 @@ with
             survey_data.gender,
             survey_data.class,
             survey_data.satisfaction,
-            custtype.customerid as CUSTOMERTYPEID,
-            
+            custtype.customerid as customertypeid
+
         from survey_data
 
-        left join custtype using (CUSTOMERTYPE)
+        left join custtype using (customertype)
 
     )
 
