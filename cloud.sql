@@ -21,7 +21,7 @@ TargetResults as (
       custtype.CUSTOMERID as CUSTOMERTYPEID, 
       traveltype.TYPEID as TYPEOFTRAVELID,
       passenger.CLASS,
-      passenger.SATISFACTION,
+      passenger.SATISFACTION
       from passenger
     left join custtype
       on passenger.CUSTOMERTYPE=custtype.CUSTOMERTYPE
