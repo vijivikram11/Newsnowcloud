@@ -1,21 +1,17 @@
-{{
-  config(
-    materialized='view'
-  )
-}}
 with
     survey_data as (
 
-        select id, gender, customertype, typeoftravel, class, satisfaction
+        select * from {{ ref('sql1') }}
 
         from survey.public.survey_data
 
     ),
 
-    custtype as (select customertype, customerid from survey.public.dim_customertype),
+    custtype as (
+        select * from {{ ref('sql2') }}
+    ),
 
-    typetravel as (select typeid, typeoftravel from survey.public.dim_traveltype),
-
+    
     final as (
 
         select
