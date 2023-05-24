@@ -1,18 +1,18 @@
-with passenger as (
+passenger as (
 
-  select * from {{ ref('SURVEY.PUBLIC.SURVEY_DATA') }}
+  select * from SURVEY.PUBLIC.SURVEY_DATA
   
 ), 
 
 custtype as (
 
-  select * from {{ ref('SURVEY.PUBLIC.DIM_CUSTOMERTYPE') }}
+  select * from SURVEY.PUBLIC.DIM_CUSTOMERTYPE
   
 ), 
 
 traveltype as (
 
-  select * from {{ ref('SURVEY.PUBLIC.DIM_TRAVELTYPE') }}
+  select * from SURVEY.PUBLIC.DIM_TRAVELTYPE
   
 ), 
 TargetResults as (
